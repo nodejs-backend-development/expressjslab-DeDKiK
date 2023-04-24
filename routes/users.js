@@ -1,11 +1,19 @@
 const express = require('express');
-const { getUsers, addUser } = require('../controllers/users.controller');
+const { getUsers, addUser, delUser, updUser } = require('../controllers/users.controller');
+const { measurePerformance } = require('../middleware/perfMeasure');
+
+
 
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', getUsers);
+router.get('/', measurePerformance, getUsers);
+router.get('/:userID', measurePerformance, getUsers);
 
-router.post('/new', addUser);
+
+
+router.delete('/:userID', measurePerformance, delUser);
+router.put('/:userID', measurePerformance, updUser);
+router.post('/', measurePerformance, addUser);
 
 module.exports = router;
